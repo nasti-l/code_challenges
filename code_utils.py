@@ -112,3 +112,20 @@ def find_better_split(A):
 def calc_diff(left_sum: int, right_sum: int, mid_val: int) -> int:
     '''Calculates the difference between two parts of an array'''
     return abs(left_sum-right_sum+2*mid_val)
+
+"""
+FrogRiverOne
+Find the earliest time when a frog can jump to the other side of a river.
+"""
+
+def find_the_moment_all_elements_appeared_at_least_once(X, A):
+    """Finds the moment all elements appeared at least once, if they did"""
+    sum = X
+    missing_leaves = [1]*X
+    for i in range(0,len(A)):
+        if missing_leaves[A[i]-1]:
+            sum-=1
+            if sum == 0:
+                return i
+            missing_leaves[A[i]-1] = 0
+    return -1
