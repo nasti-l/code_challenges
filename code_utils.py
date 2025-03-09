@@ -71,3 +71,18 @@ def count_jumps(X, Y, D):
 def round_up(n: int) -> int:
     '''Rounds up a number'''
     return int(n) + (n % 1 > 0)
+
+'''
+PermMissingElem
+Find the missing element in a given permutation.
+'''
+
+def find_missing_integer(A):
+    '''Finds the missing element in a given permutation'''
+    actual_sum = sum(A)
+    expected_sum = get_sum_of_n_elements_in_arithmetic_series(n=len(A)+1)
+    return expected_sum - actual_sum
+
+def get_sum_of_n_elements_in_arithmetic_series(n:int, d:int = 1, a: int = 1)->int:
+    '''Finds the sum of n elements in an arithmetic series'''
+    return int((n/2)*(2*a + (n-1)*d))
