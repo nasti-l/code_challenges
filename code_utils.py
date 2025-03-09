@@ -55,3 +55,19 @@ def find_single_element(A):
         result ^= num
     
     return result
+
+"""
+FrogJmp
+Count minimal number of jumps from position X to Y.
+"""
+
+def count_jumps(X, Y, D):
+    '''Counts the number of jumps D to reach X from Y'''
+    if Y<=X:
+        return 0
+    dist = Y-X
+    return round_up(dist/D)
+
+def round_up(n: int) -> int:
+    '''Rounds up a number'''
+    return int(n) + (n % 1 > 0)
