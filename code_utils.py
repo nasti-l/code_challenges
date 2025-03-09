@@ -129,3 +129,22 @@ def find_the_moment_all_elements_appeared_at_least_once(X, A):
                 return i
             missing_leaves[A[i]-1] = 0
     return -1
+
+"""
+PermCheck
+Check whether array A is a permutation.
+"""
+
+def if_permutation(A):
+    sum = len(A)
+    max_num = sum
+    elements = [1] * sum
+    for i in range(0,max_num):
+        if A[i] > max_num:
+            return 0
+        if elements[A[i]-1]:
+            sum -= 1
+            if sum == 0:
+                return 1
+            elements[A[i]-1] = 0
+    return 0
