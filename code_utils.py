@@ -41,3 +41,17 @@ def rotate_array(A, K):
 def find_k(l:int, K:int)->int:
     '''Finds the number of steps to rotate an array'''
     return K%l
+
+"""
+OddOccurrencesInArray
+Find value that occurs in odd number of elements.
+"""
+def find_single_element(A):
+    """Finds the element that occurs an odd number of times"""
+    result = 0
+    
+    # XOR all elements together
+    for num in A:
+        result ^= num
+    
+    return result
