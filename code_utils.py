@@ -86,3 +86,29 @@ def find_missing_integer(A):
 def get_sum_of_n_elements_in_arithmetic_series(n:int, d:int = 1, a: int = 1)->int:
     '''Finds the sum of n elements in an arithmetic series'''
     return int((n/2)*(2*a + (n-1)*d))
+
+
+"""
+TapeEquilibrium
+Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|.
+"""
+
+def find_better_split(A):
+   '''Finds the minimum difference between two summed parts of an array'''
+   p = 1
+   l = len(A)
+   right_sum = sum(A[p:])
+   left_sum = A[0]
+   min_diff = calc_diff(left_sum=left_sum, right_sum=right_sum, mid_val=0)
+   while p < l-1:
+       diff = calc_diff(left_sum=left_sum, right_sum=right_sum, mid_val=A[p])
+       if diff < min_diff:
+           min_diff = diff
+       left_sum += A[p]  # Add current element to left sum
+       right_sum -= A[p]  # Remove current element from right sum
+       p+=1
+   return min_diff
+
+def calc_diff(left_sum: int, right_sum: int, mid_val: int) -> int:
+    '''Calculates the difference between two parts of an array'''
+    return abs(left_sum-right_sum+2*mid_val)
