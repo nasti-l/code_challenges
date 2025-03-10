@@ -166,3 +166,16 @@ def count_car_accidents(A):
         ttl += n*m
 
     return ttl
+
+
+'''
+CountDiv
+Compute number of integers divisible by k in range [a..b].
+'''
+def count_deviders(A, B, K):
+    '''Counts the number of integers divisible by K in the range [A, B]'''
+    next_divisible = A + (K - A%K) % K
+    if next_divisible > B:
+        return 0
+    out_of_range_divisible = B+1 + (K - (B+1)%K) % K
+    return (out_of_range_divisible-next_divisible)//K
