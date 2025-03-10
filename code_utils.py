@@ -148,3 +148,21 @@ def if_permutation(A):
                 return 1
             elements[A[i]-1] = 0
     return 0
+
+''''
+PassingCars
+Count the number of passing cars on the road.
+'''
+
+def count_car_accidents(A):
+    '''Counts the number of car accidents'''
+    m = 0
+    ttl = 0
+    for n in A:
+        if n == 0:
+            m+=1
+        if ttl >= 1_000_000_000:
+            return -1
+        ttl += n*m
+
+    return ttl
