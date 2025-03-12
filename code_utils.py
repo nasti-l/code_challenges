@@ -179,3 +179,24 @@ def count_deviders(A, B, K):
         return 0
     out_of_range_divisible = B+1 + (K - (B+1)%K) % K
     return (out_of_range_divisible-next_divisible)//K
+
+'''
+Majority Element
+Given an array nums of size n, return the majority element.
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+'''
+
+'''Moore’s Voting Algorithm'''
+def majorityElement(self, nums):
+    candidate = None
+    count = 0
+    for n in nums:
+        if count == 0:
+            candidate = n
+            count = 1
+        else:
+            if candidate == n:
+                count += 1
+            else:
+                count -=1
+    return candidate
