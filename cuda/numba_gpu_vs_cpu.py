@@ -1,5 +1,6 @@
-from numba import cuda, njit, prange
+from numba import cuda, njit, prange, vectorize
 import numpy as np
+import math
 import time
 
 def matrix_multiplication():
@@ -61,4 +62,50 @@ def matrix_multiplication():
     print(C_cpu)
 
     print(f"GPU Time: {gpu_time:.5f} sec")
-matrix_multiplication()
+
+def vectorize_guassian_pdf():
+    # Precompute the constant
+    SQRT_2PI = np.float32(math.sqrt(2 * math.pi))
+
+    # CPU Version
+    @vectorize(['float32(float32, float32, float32)'], target='cpu')
+    def gaussian_pdf_cpu(x, mean, sigma):
+        return math.exp(-0.5 * ((x - mean) / sigma) ** 2) / (sigma * SQRT_2PI)
+
+    # GPU Version
+    @vectorize(['float32(float32, float32, float32)'], target='cuda')
+    def gaussian_pdf_gpu(x, mean, sigma):
+        return math.exp(-0.5 * ((x - mean) / sigma) ** 2) / (sigma * SQRT_2PI)
+
+    # Generate a large dataset
+    size = 100_000_000  # 10 million values
+    x_values = np.random.uniform(-5, 5, size).astype(np.float32)
+    mean = 0.0
+    sigma = 1.0
+
+    # Measure CPU Execution Time
+    start_cpu = time.time()
+    result_cpu = gaussian_pdf_cpu(x_values, mean, sigma)
+    end_cpu = time.time()
+    cpu_time = end_cpu - start_cpu
+
+    # Measure GPU Execution Time
+    start_gpu = time.time()
+    result_gpu = gaussian_pdf_gpu(x_values, mean, sigma)
+    end_gpu = time.time()
+    gpu_time = end_gpu - start_gpu
+
+    print(f"CPU Time: {cpu_time:.5f} sec")
+    print(f"GPU Time: {gpu_time:.5f} sec")
+
+    if gpu_time > 0:  # Ensure we don't divide by zero
+        speedup = cpu_time / gpu_time
+        if speedup >= 1:
+            print(f"GPU is {speedup:.2f}x faster than CPU! 🚀")
+        else:
+            print(f"CPU is {1/speedup:.2f}x faster than GPU! 🤔")
+    else:
+        print("Error: GPU execution time is zero or invalid!")
+
+vectorize_guassian_pdf()
+# matrix_multiplication()
